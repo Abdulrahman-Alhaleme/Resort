@@ -100,7 +100,7 @@ app.get("/resorts", async (req, res) => {
     res.json(result.rows);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(201).json({ error: "Internal server error" });
   }
 });
 
@@ -118,7 +118,7 @@ app.get("/resorts/:id", async (req, res) => {
     res.json(result.rows[0]);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(201).json({ error: "Internal server error" });
   }
 });
 
@@ -136,9 +136,134 @@ app.put("/payment/:id", async (req, res) => {
     res.sendStatus(200);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(201).json({ error: "Internal server error" });
   }
 });
+
+// ///////////////////////////////////////start tamara work
+app.post('/Signup', (req, res) => {
+  const { name, email, password } = req.body
+  const hashedPassword = bcrypt.hashSync(password, 10)
+  db.query('INSERT INTO users(name,email,password) VALUES($1,$2,$3) RETURNING*', [name, email, hashedPassword], (err, result) => {
+    if (err) {
+      console.error(err)
+    } else {
+      console.log(result.rows);
+      const variabl0 = db.query("SELECT * FROM users WHERE email = $1", [email]);
+      console.log(variabl0)
+      res.status(201).send(result.rows)
+    }
+  }
+
+  )
+})
+
+let username;
+let useremail;
+
+app.post("/payment", async (req, res) => {
+  console.log(req.body);
+  try {
+    // const cardnumber = req.body.cardnumber;
+    const expirationdate = req.body.expirationdate;
+    const cvv = req.body.cvv;
+
+    const cardholder = req.body.cardholder;
+    // const hashedCardNumber = bcrypt.hashSync(cardnumber, 10);
+
+    const newPayment = await db.query(
+      "INSERT INTO payment ( expirationdate,cvv, cardholder) VALUES($1, $2, $3) RETURNING *",
+      [expirationdate, cvv, cardholder]
+    );
+
+    res.json(newPayment.rows);
+  } catch (err) {
+    console.log(err.message);
+  }
+});
+
+
+
+
+
+
+// get user data
+app.get('/user/:id', async function (req, res) {
+
+  try {
+    const { id } = req.params;
+    const user = await db.query("SELECT * FROM users WHERE id = $1 ", [id]);
+    res.json(user.rows);
+  }
+  catch (err) {
+    console.log(err.message);
+  }
+
+});
+
+
+
+/////majdi
+
+
+let generatedUserId
+app.post("/recordp", async function (req, res) {
+  try {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    const all_records = await db.query("SELECT * FROM users");
+
+
+    let persons0 = all_records.rows;
+    persons0.map((e) => {
+      if (e.email == email) {
+        if (e.password == password) {
+          generatedUserId = e.id;
+          res.json([e.id, e]);
+
+        }
+      }
+    });
+
+    //   res.json({email,password});
+  } catch (err) {
+    console.log(err.message);
+  }
+});
+// Get All Records
+app.get("/records", async function (req, res) {
+  try {
+    const all_records = await db.query(
+      "SELECT * FROM users where id = $1  ",
+      [generatedUserId]
+
+    );
+    console.log(all_records.rows)
+    res.json(all_records.rows);
+  } catch (err) {
+    console.log(err.message);
+  }
+});
+// updat
+app.put('/Editprofile/:id', async function (req, res) {
+
+  try {
+    const { id } = req.params;
+    const { name, email } = req.body;
+    console.log(id)
+
+    const user = await db.query("UPDATE users SET name = $1,email = $2   WHERE id = $3 ", [name, email, id]);
+    res.json(user.rows);
+    console.log(email)
+  }
+  catch (err) {
+    console.log(err.message);
+  }
+
+});
+
+// ///////////////////////////////////////End tamara work
 
 const port = 5000;
 

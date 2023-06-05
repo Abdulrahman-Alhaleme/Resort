@@ -12,7 +12,7 @@ const EditProfile = () => {
     console.log(id);
 
     axios
-      .put(`http://localhost:5001/Editprofile/${id}`, {
+      .put(`http://localhost:5000/Editprofile/${id}`, {
         name: name,
         email: email,
       })
@@ -42,7 +42,7 @@ const EditProfile = () => {
     // console.log(parsedData.email)
 
     axios
-      .get("http://localhost:5001/records")
+      .get("http://localhost:5000/records")
       .then((response) => {
         setUser(response.data);
         console.log(response.data);

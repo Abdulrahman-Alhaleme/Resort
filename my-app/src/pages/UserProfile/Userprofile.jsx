@@ -15,7 +15,7 @@ function Userprofile() {
     console.log(user);
 
     axios
-      .get("http://localhost:5001/records")
+      .get("http://localhost:5000/records")
       .then((response) => {
         setUser(response.data);
         console.log(response.data);

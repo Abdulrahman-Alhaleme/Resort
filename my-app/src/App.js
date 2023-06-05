@@ -12,6 +12,8 @@ import Add from "./pages/Resort/Add";
 import Update from "./pages/Resort/Update";
 import Userprofile from "./pages/UserProfile/Userprofile";
 import EditProfile from "./pages/UserProfile/EditProfile";
+import Details from "./pages/details/Details";
+import Carousel from "./pages/details/Carousel";
 
 function App() {
   return (
@@ -26,10 +28,11 @@ function App() {
         <Route path="/resorts" element={<Reservations />} />
         <Route path="/resort" element={<Resort />} />
         <Route path="/add" element={<Add />} />
-        <Route path="/Update:id" element={<Update />} />
+        <Route path="/update/:id" element={<Update />} />
         <Route path="/userprofile" element={<Userprofile />} />
         <Route path="/editProfile" element={<EditProfile />} />
-
+        <Route path="/details/:id" element={<Details />} />
+        <Route path="/carousel" element={<Carousel />} />
       </Routes>
     </BrowserRouter>
   );

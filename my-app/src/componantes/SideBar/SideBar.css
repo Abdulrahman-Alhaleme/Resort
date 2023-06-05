@@ -34,22 +34,22 @@
     transition: all .4s ease-out;
 }
 
-.side_nav ul li:nth-child(1):after {
+.side_nav ul Link li:nth-child(1):after {
     content: "Home";
     line-height: 88px;
 }
 
-.side_nav ul li:nth-child(2):after {
+.side_nav ul Link li:nth-child(2):after {
     content: "cards";
     line-height: 88px;
 }
 
-.side_nav ul li:nth-child(3):after {
+.side_nav ul Link li:nth-child(3):after {
     content: "profile";
     line-height: 85px;
 }
 
-.side_nav ul li:nth-child(4):after {
+.side_nav ul Link li:nth-child(4):after {
     content: "Log out";
     line-height: 70px;
 }

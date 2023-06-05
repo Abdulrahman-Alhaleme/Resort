@@ -122,15 +122,6 @@ export default function Header({ isLog, updateIsLog }) {
 
               <li>
                 <Link
-                  to="/paymentPage"
-                  className="text-white font-bold transition  hover:text-yellow-500"
-                >
-                  Payment
-                </Link>
-              </li>
-
-              <li>
-                <Link
                   to="/Resorts"
                   className="text-white font-bold transition  hover:text-yellow-500"
                 >
